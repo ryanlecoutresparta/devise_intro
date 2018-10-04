@@ -2,5 +2,5 @@
 
 <%= render 'form', comment: @comment %>
 
-<%= link_to 'Show', @comment %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', @blog %> |
+<%= link_to 'Delete', blog_comment_url(@blog, @comment), method: :delete, data: {confirm:'Are you sure?'} %>
