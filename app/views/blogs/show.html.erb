@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="container">
+  <%= link_to 'Back', blogs_path, class: 'btn btn-primary my-4' %>
+  <div class="card">
+    <%= image_tag @blog.image, class: 'img-responsive', height: '300px', width: '300px' %>
+    <div class="card-body">
+      <h5 class="card-title"><%= @blog.title %></h5>
+      <p class="card-text"><%= @blog.body %></p>
+      <% if user_signed_in? %>
+        <% if @blog.user_id == current_user.id %>
+          <%= link_to 'Edit', edit_blog_path(@blog) %> |
+          <%= link_to 'Delete', @blog, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+      <% end %>
+    </div>
+  <div class="card-footer">
+    <% @blog.comments.each do |comment| %>
+    <li class="list-group-item">
+      <% if user_signed_in? %>
+        <% if comment.user_id == current_user.id %>
+          <%= link_to edit_blog_comment_path(@blog, comment) do %>
+            <%= comment.body %>
+          <% end %>
+        <% elsif !(comment.user_id == current_user.id) %>
+          <%= comment.body %>
+        <% end %>
+      <% end %>
+      <% if !user_signed_in? %>
+        <%= comment.body %>
+      <% end %>
+      <br>
+      Posted By:
+      <%= comment.user.full_name %>
+      <br>
+    </li>
+    <% end %>
+    <br>
+  </ul>
+
+  <% if user_signed_in? %>
+    <%= link_to 'Add A New Comment', new_blog_comment_path(@blog) %>
+  <% end %>
+  </div>
+  </div>
+</div>
