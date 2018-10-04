@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Blogs</h1>
+<h1 class="text-center">Blogs</h1>
 
 <div class="container">
 
@@ -21,8 +21,12 @@
           <td><%= blog.body %></td>
           <td><%= blog.user_id %></td>
           <td><%= link_to 'Show', blog %></td>
-          <td><%= link_to 'Edit', edit_blog_path(blog) %></td>
-          <td><%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% if user_signed_in? %>
+            <% if blog.user_id == current_user.id %>
+              <td><%= link_to 'Edit', edit_blog_path(blog) %></td>
+              <td><%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
